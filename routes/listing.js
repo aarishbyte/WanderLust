@@ -17,12 +17,14 @@ const upload = multer({ storage });
 router
  .route("/")
  .get(wrapAsync(listingController.index))  //INDEX route
-//  .post(isLoggedIn, validateListing, 
-//     wrapAsync(listingController.createListing) //Create Route
-//  );
- .post( upload.single('listing[image]'), (req, res) => {
-    res.send(req.file);
- })
+ .post(
+    isLoggedIn,
+    upload.single("listing[image]"), 
+
+    validateListing,
+    wrapAsync(listingController.createListing) //Create Route
+ );
+
 
 //New Route = Basically Create from Crud Operations
 
@@ -34,6 +36,7 @@ router
  .put( 
      isLoggedIn,
      isOwner,
+     upload.single("listing[image]"), 
      validateListing,
      wrapAsync(listingController.updateListing)) //Update Route
  .delete(isLoggedIn, isOwner,  wrapAsync(listingController.destroyListing) //Delete Route
