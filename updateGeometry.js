@@ -22,7 +22,7 @@ async function updateListings() {
   const listings = await Listing.find({});
 
   for (let listing of listings) {
-    if (!listing.geometry || !listing.geometry.coordinates || listing.geometry.coordinates.length === 0) {
+    // if (!listing.geometry || !listing.geometry.coordinates || listing.geometry.coordinates.length === 0) {
       let response = await geocodingClient
         .forwardGeocode({
           query: `${listing.location}, ${listing.country}`,
@@ -30,11 +30,14 @@ async function updateListings() {
         })
         .send();
 
+      console.log(listing.location,listing.country);
+      console.log(response.body.features);
+
       listing.geometry = response.body.features[0].geometry;
       await listing.save();
 
       console.log(`Updated ${listing.title}`);
-    }
+    // }
   }
 
   console.log("All listings updated!");

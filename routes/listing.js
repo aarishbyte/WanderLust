@@ -30,6 +30,15 @@ router
 
 router.get("/new", isLoggedIn, listingController.renderNewForm);
 
+//Category Filter Route
+router.get("/category/:category", async (req, res ) => {
+    const { category } = req.params;
+
+    let allListings = await Listing.find({ category });
+
+    res.render("listings/index.ejs", { allListings});
+})
+
 router
  .route("/:id")
  .get(wrapAsync(listingController.showListings))  //SHow Route

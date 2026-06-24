@@ -134,3 +134,16 @@ body {
     height: 380px;
     width: 90vh;
 }
+
+/* filter for adding responsiveness */
+@media (max-width: 768px){
+    #filters{
+        flex-wrap: nowrap;
+        overflow-x:auto;
+    }
+
+    .filter {
+        margin-right: 1rem;
+        flex-shrink: 0;
+    }
+}
