@@ -39,6 +39,23 @@ router.get("/category/:category", async (req, res ) => {
     res.render("listings/index.ejs", { allListings});
 })
 
+//Searching route 
+
+ router.get("/search", async (req, res) => {
+    let {query} = req.query;
+
+    const allListings = await Listing.find({
+        $or: [
+            { title: { $regex: query, $options: "i" }},
+            { location: { $regex: query, $options: "i" }},
+            { country: { $regex: query, $options: "i" }},
+            { category: { $regex: query, $options: "i"}}
+        ]
+    });
+
+    res.render("listings/index.ejs", {allListings});
+ })
+
 router
  .route("/:id")
  .get(wrapAsync(listingController.showListings))  //SHow Route
