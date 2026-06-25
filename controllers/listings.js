@@ -37,7 +37,7 @@ module.exports.createListing = async (req, res, next) => {
     })
     .send();
 
-    console.log(response.body.features);
+    console.log(JSON.stringify(response.body, null, 2));
     
     // let {title, description, image, price, country, location} = req.body; one method now there an another approach bt making listing a key in new.ejs
     
